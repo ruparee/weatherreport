@@ -1,4 +1,4 @@
-package com.williewheeler.weatherreport.model;
+package com.williewheeler.weatherreport.domain.dto;
 
 import java.util.List;
 
@@ -9,16 +9,17 @@ public class WeatherReport {
 	private Coord coord;
 	private List<Weather> weather;
 	private Main main;
-	private int visibility;
+	private Integer visibility;
 	private Wind wind;
 	private Clouds clouds;
 	private Rain rain;
+	private Snow snow;
 
 	/** Time of data calculation, Unix, UTC */
-	private long dt;
+	private Long dt;
 
 	private Sys sys;
-	private long id;
+	private Long id;
 	private String name;
 
 	public Coord getCoord() {
@@ -45,11 +46,11 @@ public class WeatherReport {
 		this.main = main;
 	}
 
-	public int getVisibility() {
+	public Integer getVisibility() {
 		return visibility;
 	}
 
-	public void setVisibility(int visibility) {
+	public void setVisibility(Integer visibility) {
 		this.visibility = visibility;
 	}
 
@@ -77,11 +78,19 @@ public class WeatherReport {
 		this.rain = rain;
 	}
 
-	public long getDt() {
+	public Snow getSnow() {
+		return snow;
+	}
+
+	public void setSnow(Snow snow) {
+		this.snow = snow;
+	}
+
+	public Long getDt() {
 		return dt;
 	}
 
-	public void setDt(long dt) {
+	public void setDt(Long dt) {
 		this.dt = dt;
 	}
 
@@ -93,11 +102,11 @@ public class WeatherReport {
 		this.sys = sys;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

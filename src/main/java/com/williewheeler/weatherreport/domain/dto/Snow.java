@@ -1,4 +1,4 @@
-package com.williewheeler.weatherreport.model;
+package com.williewheeler.weatherreport.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -6,13 +6,13 @@ public class Snow {
 
 	/** Snow volume for the last 3 hours */
 	@JsonProperty("3h")
-	private int lastThreeHours;
+	private Integer lastThreeHours;
 
-	public int getLastThreeHours() {
+	public Integer getLastThreeHours() {
 		return lastThreeHours;
 	}
 
-	public void setLastThreeHours(int lastThreeHours) {
+	public void setLastThreeHours(Integer lastThreeHours) {
 		this.lastThreeHours = lastThreeHours;
 	}
 }

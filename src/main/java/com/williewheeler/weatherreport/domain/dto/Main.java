@@ -1,4 +1,4 @@
-package com.williewheeler.weatherreport.model;
+package com.williewheeler.weatherreport.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -10,16 +10,24 @@ public class Main {
 	private BigDecimal temp;
 
 	/** Atmospheric pressure (sea level, if there is no sea_level or grnd_level data), hPa */
-	private int pressure;
+	private Integer pressure;
 
 	/** Humidity, % */
-	private int humidity;
+	private Integer humidity;
 
 	@JsonProperty("temp_min")
 	private BigDecimal tempMin;
 
 	@JsonProperty("temp_max")
 	private BigDecimal tempMax;
+
+	/** Atmospheric pressure at sea level, hPa */
+	@JsonProperty("sea_level")
+	private Integer seaLevel;
+
+	/** Atmospheric pressure at ground level, hPa */
+	@JsonProperty("grnd_level")
+	private Integer groundLevel;
 
 	public BigDecimal getTemp() {
 		return temp;
@@ -29,19 +37,19 @@ public class Main {
 		this.temp = temp;
 	}
 
-	public int getPressure() {
+	public Integer getPressure() {
 		return pressure;
 	}
 
-	public void setPressure(int pressure) {
+	public void setPressure(Integer pressure) {
 		this.pressure = pressure;
 	}
 
-	public int getHumidity() {
+	public Integer getHumidity() {
 		return humidity;
 	}
 
-	public void setHumidity(int humidity) {
+	public void setHumidity(Integer humidity) {
 		this.humidity = humidity;
 	}
 
@@ -59,5 +67,21 @@ public class Main {
 
 	public void setTempMax(BigDecimal tempMax) {
 		this.tempMax = tempMax;
+	}
+
+	public Integer getSeaLevel() {
+		return seaLevel;
+	}
+
+	public void setSeaLevel(Integer seaLevel) {
+		this.seaLevel = seaLevel;
+	}
+
+	public Integer getGroundLevel() {
+		return groundLevel;
+	}
+
+	public void setGroundLevel(Integer groundLevel) {
+		this.groundLevel = groundLevel;
 	}
 }

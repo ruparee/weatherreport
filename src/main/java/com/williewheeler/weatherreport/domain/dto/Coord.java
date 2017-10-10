@@ -1,4 +1,4 @@
-package com.williewheeler.weatherreport.model;
+package com.williewheeler.weatherreport.domain.dto;
 
 import java.math.BigDecimal;
 

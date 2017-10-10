@@ -1,13 +1,13 @@
-package com.williewheeler.weatherreport.model;
+package com.williewheeler.weatherreport.domain.dto;
 
 public class Sys {
 	private String country;
 
 	/** Sunrise time, Unix, UTC */
-	private long sunrise;
+	private Long sunrise;
 
 	/** Sunset time, Unix, UTC */
-	private long sunset;
+	private Long sunset;
 
 	public String getCountry() {
 		return country;
@@ -17,19 +17,19 @@ public class Sys {
 		this.country = country;
 	}
 
-	public long getSunrise() {
+	public Long getSunrise() {
 		return sunrise;
 	}
 
-	public void setSunrise(long sunrise) {
+	public void setSunrise(Long sunrise) {
 		this.sunrise = sunrise;
 	}
 
-	public long getSunset() {
+	public Long getSunset() {
 		return sunset;
 	}
 
-	public void setSunset(long sunset) {
+	public void setSunset(Long sunset) {
 		this.sunset = sunset;
 	}
 }

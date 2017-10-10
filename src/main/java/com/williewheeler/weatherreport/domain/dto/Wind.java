@@ -1,4 +1,4 @@
-package com.williewheeler.weatherreport.model;
+package com.williewheeler.weatherreport.domain.dto;
 
 import java.math.BigDecimal;
 
@@ -8,7 +8,7 @@ public class Wind {
 	private BigDecimal speed;
 
 	/** Wind direction, degrees (meteorological) */
-	private int deg;
+	private Integer deg;
 
 	public BigDecimal getSpeed() {
 		return speed;
@@ -18,11 +18,11 @@ public class Wind {
 		this.speed = speed;
 	}
 
-	public int getDeg() {
+	public Integer getDeg() {
 		return deg;
 	}
 
-	public void setDeg(int deg) {
+	public void setDeg(Integer deg) {
 		this.deg = deg;
 	}
 }

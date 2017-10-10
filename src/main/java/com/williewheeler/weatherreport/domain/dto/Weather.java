@@ -1,16 +1,16 @@
-package com.williewheeler.weatherreport.model;
+package com.williewheeler.weatherreport.domain.dto;
 
 public class Weather {
-	private long id;
+	private Long id;
 	private String main;
 	private String description;
 	private String icon;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
