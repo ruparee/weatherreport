@@ -1,0 +1,11 @@
+# Gradle
+/.gradle/
+/build/
+
+# IDEA
+/.idea/
+/weatherreport.iml
+
+# App
+/data/
+/src/main/resources/application.yml

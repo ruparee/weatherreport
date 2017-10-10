@@ -1,0 +1,24 @@
+plugins {
+  id 'org.springframework.boot' version '1.5.7.RELEASE'
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+
+repositories {
+  jcenter()
+}
+
+ext {
+  hystrixVersion = '1.5.13'
+  springBootVersion = '1.5.7.RELEASE'
+}
+
+dependencies {
+  compile(
+    "com.netflix.hystrix:hystrix-core:${hystrixVersion}",
+    "org.springframework.boot:spring-boot-starter:${springBootVersion}",
+    "org.springframework.boot:spring-boot-starter-web:${springBootVersion}",
+  )
+  testCompile 'junit:junit:4.12'
+}
