@@ -5,13 +5,13 @@ USE `weatherreport`;
 
 CREATE TABLE `city` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `code` INT(10) UNSIGNED NOT NULL,
+  `owm_city_id` INT(10) UNSIGNED NOT NULL,
   `name` VARCHAR(80) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY (`code`)
+  UNIQUE KEY (`owm_city_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `city` (`code`, `name`) VALUES
+INSERT INTO `city` (`owm_city_id`, `name`) VALUES
   (5786882, 'Bellevue, WA, US'),
   (7839562, 'Brisbane, QLD, AU'),
   (4887398, 'Chicago, IL, US'),

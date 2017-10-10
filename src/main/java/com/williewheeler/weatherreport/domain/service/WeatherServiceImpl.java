@@ -2,17 +2,16 @@ package com.williewheeler.weatherreport.domain.service;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
+import com.netflix.hystrix.HystrixCommandProperties;
 import com.williewheeler.weatherreport.domain.entity.City;
-import com.williewheeler.weatherreport.domain.dto.WeatherReport;
 import com.williewheeler.weatherreport.domain.repo.CityRepo;
+import com.williewheeler.weatherreport.domain.template.OpenWeatherMapTemplate;
+import com.williewheeler.weatherreport.domain.template.binding.WeatherReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,84 +22,93 @@ import java.util.stream.Collectors;
 public class WeatherServiceImpl implements WeatherService {
 	private static final Logger LOG = LoggerFactory.getLogger(WeatherServiceImpl.class);
 
-	private static final String WEATHER_URL_TEMPLATE =
-			"https://api.openweathermap.org/data/2.5/weather?appid=%s&id=%d";
-
 	@Autowired
 	private CityRepo cityRepo;
 
 	@Autowired
-	private RestTemplate restTemplate;
+	private OpenWeatherMapTemplate openWeatherMapTemplate;
 
-	@Value("${weatherService.key}")
-	private String weatherServiceKey;
+	@Value("${hystrix.openWeatherMap.timeout}")
+	private Integer hystrixOpenWeatherMapTimeout;
 
 	@Override
 	public List<WeatherReport> getWeatherReports() {
-		List<City> cities = new GetCitiesCommand().execute();
-		return new GetWeatherReportsCommand(cities).execute();
+//		return getWeatherReportsUnprotected();
+		return getWeatherReportsProtected();
 	}
 
-	/**
-	 * Hystrix command to get the list of cities.
-	 */
+	private List<WeatherReport> getWeatherReportsUnprotected() {
+		final List<City> cities = getCitiesPrimary();
+		return getWeatherReportsByCityIds(toCityIds(cities));
+	}
+
+	private List<WeatherReport> getWeatherReportsProtected() {
+		final List<City> cities = new GetCitiesCommand().execute();
+		return new GetWeatherReportsByCityIds(toCityIds(cities)).execute();
+	}
+
+	private List<City> getCitiesPrimary() {
+		LOG.trace("Getting cities from database");
+		final List<City> cities = new ArrayList<>();
+		cityRepo.findAll().forEach(cities::add);
+		return cities;
+//		throw new RuntimeException("Simulated database exception");
+	}
+
+	private List<City> getCitiesFallback() {
+		LOG.warn("Failed to get cities from database. Falling back to hardcoded cities.");
+		return Arrays.asList(
+				new City(0L, 5786882L, "Bellevue")
+		);
+	}
+
+	private List<Long> toCityIds(List<City> cities) {
+		return cities
+				.stream()
+				.map(city -> city.getOwmCityId())
+				.collect(Collectors.toList());
+	}
+
+	private List<WeatherReport> getWeatherReportsByCityIds(List<Long> cityIds) {
+		LOG.trace("Getting weather reports from OpenWeatherMap web service");
+		return openWeatherMapTemplate.getWeatherReports(cityIds);
+	}
+
 	private class GetCitiesCommand extends HystrixCommand<List<City>> {
 
 		public GetCitiesCommand() {
-			super(HystrixCommandGroupKey.Factory.asKey("WeatherGroup"));
+			super(HystrixCommandGroupKey.Factory.asKey("DatabaseGroup"));
 		}
 
 		@Override
 		protected List<City> run() throws Exception {
-			LOG.trace("Getting cities");
-			List<City> cities = new ArrayList<>();
-			cityRepo.findAll().forEach(cities::add);
-			return cities;
-
-//			throw new RuntimeException("Simulated database exception");
+			return getCitiesPrimary();
 		}
 
 		@Override
 		public List<City> getFallback() {
-			LOG.warn("Database call failed. Falling back to hardcoded city list.");
-			return Arrays.asList(
-					new City(0L, 5786882L, "Bellevue")
-			);
+			return getCitiesFallback();
 		}
 	}
 
-	/**
-	 * Hystrix command to get the list of weather reports for a given list of cities.
-	 */
-	private class GetWeatherReportsCommand extends HystrixCommand<List<WeatherReport>> {
-		private List<City> cities;
+	private class GetWeatherReportsByCityIds extends HystrixCommand<List<WeatherReport>> {
+		private List<Long> cityIds;
 
-		public GetWeatherReportsCommand(List<City> cities) {
-			super(HystrixCommandGroupKey.Factory.asKey("WeatherGroup"));
-			this.cities = cities;
+		public GetWeatherReportsByCityIds(List<Long> cityIds) {
+//			super(HystrixCommandGroupKey.Factory.asKey("OpenWeatherMapGroup"));
+			super(Setter
+					.withGroupKey(HystrixCommandGroupKey.Factory.asKey("OpenWeatherMapGroup"))
+					.andCommandPropertiesDefaults(
+							HystrixCommandProperties.Setter()
+									.withExecutionTimeoutInMilliseconds(hystrixOpenWeatherMapTimeout)
+					)
+			);
+			this.cityIds = cityIds;
 		}
 
 		@Override
 		protected List<WeatherReport> run() throws Exception {
-			LOG.trace("Getting weather reports");
-			try {
-				return getWeatherReports();
-			} catch (HttpClientErrorException e) {
-				throw new WeatherReportException("Failed to get weather reports.");
-			}
-		}
-
-		private List<WeatherReport> getWeatherReports() {
-			return cities
-					.parallelStream()
-					.map(city -> getWeatherReport(city.getCode()))
-					.collect(Collectors.toList());
-		}
-
-		private WeatherReport getWeatherReport(long cityId) {
-			String url = String.format(WEATHER_URL_TEMPLATE, weatherServiceKey, cityId);
-			HttpEntity<WeatherReport> responseEntity = restTemplate.getForEntity(url, WeatherReport.class);
-			return responseEntity.getBody();
+			return getWeatherReportsByCityIds(cityIds);
 		}
 	}
 }

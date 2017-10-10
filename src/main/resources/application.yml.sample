@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/weatherreport?autoReconnect=true
+    username: your_db_username
+    password: your_db_password
+    maximumPoolSize: 8
+    minimumIdle: 0
+  jpa:
+    openInView: true
+    database: MYSQL
+    showSql: false
+    generateDdl: false
+    hibernate:
+      naming_strategy: org.hibernate.cfg.ImprovedNamingStrategy
+
+logging:
+  level:
+    com.williewheeler.weatherreport: TRACE
+    org.springframework: INFO
+
+openWeatherMap:
+  appId: your_open_weather_map_api_id
+
+hystrix:
+  openWeatherMap:
+    timeout: 2000

@@ -1,6 +1,6 @@
 package com.williewheeler.weatherreport.domain.service;
 
-import com.williewheeler.weatherreport.domain.dto.WeatherReport;
+import com.williewheeler.weatherreport.domain.template.binding.WeatherReport;
 
 import java.util.List;
 

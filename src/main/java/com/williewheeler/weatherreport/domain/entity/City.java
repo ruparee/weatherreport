@@ -12,15 +12,19 @@ public class City {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	private Long code;
+	/**
+	 * OpenWeatherMap city ID.
+	 */
+	private Long owmCityId;
+
 	private String name;
 
 	public City() {
 	}
 
-	public City(Long id, Long code, String name) {
+	public City(Long id, Long owmCityId, String name) {
 		this.id = id;
-		this.code = code;
+		this.owmCityId = owmCityId;
 		this.name = name;
 	}
 
@@ -32,12 +36,12 @@ public class City {
 		this.id = id;
 	}
 
-	public Long getCode() {
-		return code;
+	public Long getOwmCityId() {
+		return owmCityId;
 	}
 
-	public void setCode(Long code) {
-		this.code = code;
+	public void setOwmCityId(Long owmCityId) {
+		this.owmCityId = owmCityId;
 	}
 
 	public String getName() {

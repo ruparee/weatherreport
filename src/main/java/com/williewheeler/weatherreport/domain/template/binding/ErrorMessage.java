@@ -1,4 +1,4 @@
-package com.williewheeler.weatherreport.domain.dto;
+package com.williewheeler.weatherreport.domain.template.binding;
 
 public class ErrorMessage {
 	private String message;
