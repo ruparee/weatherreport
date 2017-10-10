@@ -5,8 +5,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.math.BigDecimal;
 
 public class Main {
+
+	/** Temperature. Unit: Default: Kelvin, Metric: Celcius, Imperial: Fahrenheit */
 	private BigDecimal temp;
+
+	/** Atmospheric pressure (sea level, if there is no sea_level or grnd_level data), hPa */
 	private int pressure;
+
+	/** Humidity, % */
 	private int humidity;
 
 	@JsonProperty("temp_min")

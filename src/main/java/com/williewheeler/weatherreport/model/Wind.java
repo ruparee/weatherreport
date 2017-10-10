@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class Wind {
 
-	/** Wind speed. Unit default: meter/sec, Metric: meter/sec, Imperial: miles/hour */
+	/** Wind speed. Unit: Default: meter/sec, Metric: meter/sec, Imperial: miles/hour */
 	private BigDecimal speed;
 
 	/** Wind direction, degrees (meteorological) */
