@@ -1,0 +1,27 @@
+{
+  "schemaVersion": "2.0",
+  "description": "Blackhole an inbound port on an instance",
+  "parameters": {
+    "port": {
+      "type": "String",
+      "description": "(Required) Specify an inbound port to blackhole."
+    },
+    "duration": {
+      "type": "String",
+      "description": "(Required) Duration (in seconds) to blackhole the inbound port."
+    }
+  },
+  "mainSteps": [
+    {
+      "action": "aws:runShellScript",
+      "name": "runShellScript",
+      "inputs": {
+        "runCommand": [
+          "iptables -A INPUT -p tcp --destination-port {{ port }} -j DROP",
+          "sleep {{ duration }}",
+          "iptables -D INPUT -p tcp --destination-port {{ port }} -j DROP"
+        ]
+      }
+    }
+  ]
+}

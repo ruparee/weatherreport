@@ -27,3 +27,8 @@ dependencies {
   )
   testCompile 'junit:junit:4.12'
 }
+
+bootRun {
+//  environment 'spring.profiles.active', 'dev'
+  systemProperty 'spring.profiles.active', 'test'
+}
