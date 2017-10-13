@@ -2,6 +2,13 @@
 
 Hystrix demo.
 
+## Preliminaries
+
+- Install MySQL, and run the script `src/main/resources/create-db.sql` to create the database.
+- Go to [OpenWeatherMap](https://openweathermap.org/) and sign up for an API key.
+- Copy the file `application.yml.sample` to `application.yml`, substituting in the values for your database configuration.
+  You'll also need to provide your OpenWeatherMap API key.
+
 ## Build it
 
 ```
