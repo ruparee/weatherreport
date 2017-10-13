@@ -25,3 +25,5 @@ openWeatherMap:
 hystrix:
   openWeatherMap:
     timeout: 2000
+
+resilienceMode: true

@@ -31,10 +31,12 @@ public class WeatherServiceImpl implements WeatherService {
 	@Value("${hystrix.openWeatherMap.timeout}")
 	private Integer hystrixOpenWeatherMapTimeout;
 
+	@Value("${resilienceMode}")
+	private Boolean resilienceMode;
+
 	@Override
 	public List<WeatherReport> getWeatherReports() {
-//		return getWeatherReportsUnprotected();
-		return getWeatherReportsProtected();
+		return resilienceMode ? getWeatherReportsProtected() : getWeatherReportsUnprotected();
 	}
 
 	private List<WeatherReport> getWeatherReportsUnprotected() {
