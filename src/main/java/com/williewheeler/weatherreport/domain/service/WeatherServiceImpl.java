@@ -31,22 +31,19 @@ public class WeatherServiceImpl implements WeatherService {
 	@Value("${hystrix.openWeatherMap.timeout}")
 	private Integer hystrixOpenWeatherMapTimeout;
 
-	@Value("${resilienceMode}")
-	private Boolean resilienceMode;
-
 	@Override
-	public List<WeatherReport> getWeatherReports() {
-		return resilienceMode ? getWeatherReportsProtected() : getWeatherReportsUnprotected();
+	public List<WeatherReport> getWeatherReports(boolean resilient) {
+		return resilient ? getWeatherReportsResilient() : getWeatherReportsNotResilient();
 	}
 
-	private List<WeatherReport> getWeatherReportsUnprotected() {
-		final List<City> cities = getCitiesPrimary();
-		return getWeatherReportsByCityIds(toCityIds(cities));
-	}
-
-	private List<WeatherReport> getWeatherReportsProtected() {
+	private List<WeatherReport> getWeatherReportsResilient() {
 		final List<City> cities = new GetCitiesCommand().execute();
 		return new GetWeatherReportsByCityIds(toCityIds(cities)).execute();
+	}
+	
+	private List<WeatherReport> getWeatherReportsNotResilient() {
+		final List<City> cities = getCitiesPrimary();
+		return getWeatherReportsByCityIds(toCityIds(cities));
 	}
 
 	private List<City> getCitiesPrimary() {
