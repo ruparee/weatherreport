@@ -28,6 +28,9 @@ public class WeatherServiceImpl implements WeatherService {
 	@Autowired
 	private OpenWeatherMapTemplate openWeatherMapTemplate;
 
+	@Value("${hystrix.database.timeout}")
+	private Integer hystrixDatabaseTimeout;
+
 	@Value("${hystrix.openWeatherMap.timeout}")
 	private Integer hystrixOpenWeatherMapTimeout;
 
@@ -76,7 +79,14 @@ public class WeatherServiceImpl implements WeatherService {
 	private class GetCitiesCommand extends HystrixCommand<List<City>> {
 
 		public GetCitiesCommand() {
-			super(HystrixCommandGroupKey.Factory.asKey("DatabaseGroup"));
+//			super(HystrixCommandGroupKey.Factory.asKey("DatabaseGroup"));
+			super(Setter
+					.withGroupKey(HystrixCommandGroupKey.Factory.asKey("DatabaseGroup"))
+					.andCommandPropertiesDefaults(
+							HystrixCommandProperties.Setter()
+									.withExecutionTimeoutInMilliseconds(hystrixDatabaseTimeout)
+					)
+			);
 		}
 
 		@Override
