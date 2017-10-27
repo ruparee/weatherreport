@@ -1,4 +1,4 @@
-package com.williewheeler.weatherreport.domain.template.binding;
+package com.williewheeler.weatherreport.domain.owm.binding;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

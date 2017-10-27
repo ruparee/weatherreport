@@ -1,6 +1,6 @@
-package com.williewheeler.weatherreport.domain.template;
+package com.williewheeler.weatherreport.domain.owm;
 
-import com.williewheeler.weatherreport.domain.template.binding.WeatherReport;
+import com.williewheeler.weatherreport.domain.owm.binding.WeatherReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

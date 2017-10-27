@@ -1,4 +1,4 @@
-package com.williewheeler.weatherreport.domain.template;
+package com.williewheeler.weatherreport.domain.owm;
 
 public class OpenWeatherMapException extends RuntimeException {
 
