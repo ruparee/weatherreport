@@ -1,24 +1,11 @@
 package com.williewheeler.weatherreport.connector.openweathermap;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
+@Data
 public class Coord {
 	private BigDecimal lon;
 	private BigDecimal lat;
-
-	public BigDecimal getLon() {
-		return lon;
-	}
-
-	public void setLon(BigDecimal lon) {
-		this.lon = lon;
-	}
-
-	public BigDecimal getLat() {
-		return lat;
-	}
-
-	public void setLat(BigDecimal lat) {
-		this.lat = lat;
-	}
 }

@@ -1,4 +1,4 @@
-package com.williewheeler.weatherreport.domain.store.impl;
+package com.williewheeler.weatherreport.domain.store;
 
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
@@ -17,8 +17,17 @@ import java.util.List;
 public class WeatherStoreResilient implements WeatherStore {
 	
 	@Autowired
-	@Qualifier("weatherStoreNonResilient")
-	private WeatherStore weatherStore;
+	@Qualifier("weatherStoreS3")
+	private WeatherStore weatherStoreS3;
+
+	@Autowired
+	@Qualifier("weatherStoreOpenWeatherMap")
+	private WeatherStore weatherStoreOpenWeatherMap;
+
+	// Not currently using this. [WLW]
+	@Autowired
+	@Qualifier("weatherStoreGist")
+	private WeatherStore weatherStoreGist;
 	
 	@Value("${hystrix.openWeatherMap.timeout}")
 	private Integer hystrixOpenWeatherMapTimeout;
@@ -45,7 +54,12 @@ public class WeatherStoreResilient implements WeatherStore {
 		
 		@Override
 		protected List<WeatherReport> run() throws Exception {
-			return weatherStore.getAllByCities(cities);
+			return weatherStoreS3.getAllByCities(cities);
+		}
+
+		@Override
+		protected List<WeatherReport> getFallback() {
+			return weatherStoreOpenWeatherMap.getAllByCities(cities);
 		}
 	}
 }

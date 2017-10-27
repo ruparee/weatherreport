@@ -1,7 +1,10 @@
 package com.williewheeler.weatherreport.connector.openweathermap;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 
+@Data
 public class Wind {
 
 	/** Wind speed. Unit: Default: meter/sec, Metric: meter/sec, Imperial: miles/hour */
@@ -9,20 +12,4 @@ public class Wind {
 
 	/** Wind direction, degrees (meteorological) */
 	private Integer deg;
-
-	public BigDecimal getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(BigDecimal speed) {
-		this.speed = speed;
-	}
-
-	public Integer getDeg() {
-		return deg;
-	}
-
-	public void setDeg(Integer deg) {
-		this.deg = deg;
-	}
 }

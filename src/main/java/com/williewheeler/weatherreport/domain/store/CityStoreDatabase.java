@@ -1,8 +1,7 @@
-package com.williewheeler.weatherreport.domain.store.impl;
+package com.williewheeler.weatherreport.domain.store;
 
 import com.williewheeler.weatherreport.domain.entity.City;
 import com.williewheeler.weatherreport.domain.repo.CityRepo;
-import com.williewheeler.weatherreport.domain.store.CityStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CityStoreNonResilient implements CityStore {
+public class CityStoreDatabase implements CityStore {
 	private static final Logger LOG = LoggerFactory.getLogger(CityStoreResilient.class);
 	
 	@Autowired
