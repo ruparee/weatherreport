@@ -1,6 +1,6 @@
 package com.williewheeler.weatherreport.controller;
 
-import com.williewheeler.weatherreport.domain.template.binding.ErrorMessage;
+import com.williewheeler.weatherreport.connector.openweathermap.binding.ErrorMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
