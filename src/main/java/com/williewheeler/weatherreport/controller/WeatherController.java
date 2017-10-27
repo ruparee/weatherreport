@@ -1,6 +1,6 @@
 package com.williewheeler.weatherreport.controller;
 
-import com.williewheeler.weatherreport.connector.openweathermap.binding.WeatherReport;
+import com.williewheeler.weatherreport.connector.openweathermap.WeatherReport;
 import com.williewheeler.weatherreport.domain.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -1,6 +1,6 @@
 package com.williewheeler.weatherreport.domain.service;
 
-import com.williewheeler.weatherreport.connector.openweathermap.binding.WeatherReport;
+import com.williewheeler.weatherreport.connector.openweathermap.WeatherReport;
 
 import java.util.List;
 

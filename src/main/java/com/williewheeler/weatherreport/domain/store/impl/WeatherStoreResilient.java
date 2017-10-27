@@ -4,7 +4,7 @@ import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandProperties;
 import com.williewheeler.weatherreport.domain.entity.City;
-import com.williewheeler.weatherreport.connector.openweathermap.binding.WeatherReport;
+import com.williewheeler.weatherreport.connector.openweathermap.WeatherReport;
 import com.williewheeler.weatherreport.domain.store.WeatherStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

@@ -31,6 +31,6 @@ dependencies {
 }
 
 bootRun {
-//  environment 'spring.profiles.active', 'dev'
-  systemProperty 'spring.profiles.active', 'test'
+  systemProperty 'spring.profiles.active', 'dev'
+//  systemProperty 'spring.profiles.active', 'test'
 }

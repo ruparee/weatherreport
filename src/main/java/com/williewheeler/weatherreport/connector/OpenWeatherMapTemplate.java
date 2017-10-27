@@ -1,6 +1,6 @@
-package com.williewheeler.weatherreport.connector.openweathermap;
+package com.williewheeler.weatherreport.connector;
 
-import com.williewheeler.weatherreport.connector.openweathermap.binding.WeatherReport;
+import com.williewheeler.weatherreport.connector.openweathermap.WeatherReport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class OpenWeatherMapTemplate {
 					.map(cityId -> getWeatherReport(cityId))
 					.collect(Collectors.toList());
 		} catch (RestClientException e) {
-			throw new OpenWeatherMapException(e);
+			throw new ConnectorException(e);
 		}
 	}
 

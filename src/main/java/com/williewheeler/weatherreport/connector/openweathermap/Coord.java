@@ -1,4 +1,4 @@
-package com.williewheeler.weatherreport.connector.openweathermap.binding;
+package com.williewheeler.weatherreport.connector.openweathermap;
 
 import java.math.BigDecimal;
 
