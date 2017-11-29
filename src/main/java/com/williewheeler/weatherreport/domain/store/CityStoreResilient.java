@@ -35,7 +35,6 @@ public class CityStoreResilient implements CityStore {
 	private class GetCitiesCommand extends HystrixCommand<List<City>> {
 		
 		public GetCitiesCommand() {
-//			super(HystrixCommandGroupKey.Factory.asKey("DatabaseGroup"));
 			super(HystrixCommand.Setter
 					.withGroupKey(HystrixCommandGroupKey.Factory.asKey("DatabaseGroup"))
 					.andCommandPropertiesDefaults(

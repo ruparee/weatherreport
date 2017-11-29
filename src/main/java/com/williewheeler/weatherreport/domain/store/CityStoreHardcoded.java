@@ -1,20 +1,19 @@
 package com.williewheeler.weatherreport.domain.store;
 
 import com.williewheeler.weatherreport.domain.entity.City;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CityStoreHardcoded implements CityStore {
-	private static final Logger LOG = LoggerFactory.getLogger(CityStoreHardcoded.class);
 
 	@Override
 	public List<City> getAll() {
-		LOG.trace("Getting hardcoded cities");
+		log.trace("Getting hardcoded cities");
 		return Arrays.asList(
 				City.builder()
 						.id(0L)

@@ -42,7 +42,6 @@ public class WeatherStoreResilient implements WeatherStore {
 		private List<City> cities;
 		
 		public GetWeatherReportsByCities(List<City> cities) {
-//			super(HystrixCommandGroupKey.Factory.asKey("OpenWeatherMapGroup"));
 			super(HystrixCommand.Setter
 					.withGroupKey(HystrixCommandGroupKey.Factory.asKey("OpenWeatherMapGroup"))
 					.andCommandPropertiesDefaults(
@@ -60,7 +59,6 @@ public class WeatherStoreResilient implements WeatherStore {
 		
 		@Override
 		protected List<WeatherReport> getFallback() {
-//			return weatherStoreOpenWeatherMap.getAllByCities(cities);
 			return weatherStoreGist.getAllByCities(cities);
 		}
 	}
