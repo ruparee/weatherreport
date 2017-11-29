@@ -5,6 +5,7 @@ import com.netflix.hystrix.HystrixCommandGroupKey;
 import com.netflix.hystrix.HystrixCommandProperties;
 import com.williewheeler.weatherreport.connector.openweathermap.WeatherReport;
 import com.williewheeler.weatherreport.domain.entity.City;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,17 +14,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Slf4j
 public class WeatherStoreResilient implements WeatherStore {
 	
 	@Autowired
 	@Qualifier("weatherStoreS3")
 	private WeatherStore weatherStoreS3;
 
+	// Not currently using this. [WLW]
 	@Autowired
 	@Qualifier("weatherStoreOpenWeatherMap")
 	private WeatherStore weatherStoreOpenWeatherMap;
 
-	// Not currently using this. [WLW]
 	@Autowired
 	@Qualifier("weatherStoreGist")
 	private WeatherStore weatherStoreGist;
@@ -56,12 +58,10 @@ public class WeatherStoreResilient implements WeatherStore {
 			return weatherStoreS3.getAllByCities(cities);
 		}
 		
-		// For now we won't fallback here, because we want to attack port 443,
-		// and having this fallback will probably cause the OpenWeatherMap call
-		// to hang. [WLW]
-//		@Override
-//		protected List<WeatherReport> getFallback() {
+		@Override
+		protected List<WeatherReport> getFallback() {
 //			return weatherStoreOpenWeatherMap.getAllByCities(cities);
-//		}
+			return weatherStoreGist.getAllByCities(cities);
+		}
 	}
 }
